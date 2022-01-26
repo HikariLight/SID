@@ -17,17 +17,13 @@ class Model():
 
         return img_links
 
-    def download(self, img_links):
-
+    def download(self, link, dir_name):
         try: 
-            os.mkdir("./Downloads") 
+            os.mkdir(dir_name) 
         except OSError as error: 
             print(error)
 
+        img_links = self.parse(link)
+
         for i in range(len(img_links)):
-            wget.download(img_links[i], "Downloads/{}.jpg".format(i))
-
-
-# m = Model()
-# m.download(m.parse("https://unsplash.com/s/photos/cute-cat"))
-# m.download(m.parse("http://all-free-download.com/wallpapers/nature-wallpaper.html"))
+            wget.download(img_links[i], "{}/{}.jpg".format(dir_name, i))
