@@ -1,45 +1,51 @@
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QProgressBar
-import sys
+from PyQt6.QtWidgets import QMainWindow, QLabel, QPushButton, QProgressBar, QLineEdit
+from PyQt6.QtGui import QFont
 
 class View(QMainWindow):
 
     def __init__(self, controller):
         super().__init__()
         self.initUI()
-
         self.controller = controller
 
     def initUI(self):
 
-        self.setWindowTitle("Simple Images Downloader")
+        self.setWindowTitle("SID")
 
-        self.link_title = QLabel('Enter link here')
-        self.link_title.move(173, 362)
+        self.setStyleSheet(open("style.css").read())
 
-        # self.link_input = QLineEdit(self)
-        # self.link_input.move(372, 344)
+        self.title = QLabel(self)
+        self.title.setText("Simple Image Downloader")
+        self.title.setFont(QFont("Helvetica", 24))
+        self.title.adjustSize()
+        self.title.move(345, 146)
 
-        # self.dir_title = QLabel('Pick save directory')
-        # self.dir_title.move(173, 465)
+        self.link_title = QLabel(self)
+        self.link_title.setText("Link")
+        self.link_title.move(250, 270)
+
+        self.link_input = QLineEdit(self)
+        self.link_input.setGeometry(380, 270, 300, 30)
+
+        self.dir_title = QLabel(self)
+        self.dir_title.setText("Destination")
+        self.dir_title.move(250, 400)
         
-        # self.dir_input = QLineEdit(self)
-        # self.dir_input.move(372, 465)
+        self.dir_input = QLineEdit(self)
+        self.dir_input.setGeometry(380, 400, 300, 30)
 
         self.btn = QPushButton('Download', self)
-        self.btn.move(440, 627)
+        self.btn.move(420, 550)
+        self.btn.resize(150, 50)
         self.btn.clicked.connect(self.download)
 
-        self.setGeometry(300, 300, 1149, 888)
-        self.setWindowTitle('Simple Image Downloader')
+        self.setGeometry(300, 300, 960, 720)
+        self.setWindowTitle('SID')
+
         self.show()
 
     def download(self):
-        self.controller.download()
-    
-app = QApplication(sys.argv)
-
-window = View()
-window.show()
-
-app.exec()
+        try:
+            self.controller.download(self.link_input.text(), self.dir_input.text())
+        except Exception as e:
+            print(e)
