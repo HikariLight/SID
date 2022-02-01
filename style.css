@@ -19,4 +19,5 @@ QPushButton:hover{
 QLineEdit{
     background-color: white;
     border: 1px solid black;
+    color: black;
 }
