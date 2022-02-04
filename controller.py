@@ -12,6 +12,9 @@ class Controller:
         self.view = View(self)
         self.view.show()
         app.exec()
+    
+    def getPicsNumber(self, link):
+        return self.model.get_pics_number(link)
 
-    def download(self, link, dir_name):
-        self.model.download(link, dir_name)
+    def download_all(self, link, dir_name):
+        self.model.download_all(link, dir_name)

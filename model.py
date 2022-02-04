@@ -1,3 +1,4 @@
+from posixpath import dirname
 import wget
 import requests
 import os
@@ -6,7 +7,7 @@ from bs4 import BeautifulSoup
 
 class Model():    
 
-    def parse(self, link):
+    def get_img_links(self, link):
         img_links = []
 
         page = requests.get(link).text
@@ -16,14 +17,30 @@ class Model():
             img_links.append(image.get("src"))
 
         return img_links
+    
+    def get_pics_number(self, link):
+        return len(self.get_img_links(link))
 
-    def download(self, link, dir_name):
+    def make_dir(self, dir_name):
         try: 
             os.mkdir(dir_name) 
         except OSError as error: 
             print(error)
 
-        img_links = self.parse(link)
+    def download_img(self, link, name):
+        try:
+            wget.download(link, name)
+        except OSError as e:
+            print(e)
+
+    def download_all(self, link, dir_name):
+
+        try:
+            self.make_dir(dirname)
+        except:
+            print("Already exists")
+
+        img_links = self.get_img_links(link)
 
         for i in range(len(img_links)):
-            wget.download(img_links[i], "{}/{}.jpg".format(dir_name, i))
+            self.download_img(img_links[i], "{}/{}.jpg".format(dir_name, i))

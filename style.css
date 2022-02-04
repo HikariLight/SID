@@ -12,12 +12,23 @@ QPushButton{
     border-radius: 25px;;
 }
 
-QPushButton:hover{
-    cursor: pointer;
-}
-
 QLineEdit{
     background-color: white;
     border: 1px solid black;
     color: black;
+}
+
+QFileDialog{
+    background-color: black;
+}
+
+QProgressBar {
+    text-align: center;
+    color: black;
+    background-color: white;
+    border: 1px solid #7D2FA0;
+}
+QProgressBar::chunk {
+    border-radius: 6px;
+    background-color: #009688;
 }
